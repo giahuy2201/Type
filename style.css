@@ -1,0 +1,47 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.heading{
+    text-align: center;
+    font-size: 3em; 
+}
+
+.wrapper{
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.word-box{
+    border: 2px solid #000;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+span{
+    padding: 3px;
+}
+
+input {
+    font-size: 2em !important;
+}
+
+.highlight{
+    border-radius: 3px;
+    background-color: #ddd;
+}
+
+.mistake{
+    background-color: #fc0d1b;
+}
+
+.wrong{
+    color: #fc0d1b;
+}
+
+.right{
+    background: #fff;
+    color: #0f7e12;
+}
