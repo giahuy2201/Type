@@ -1,0 +1,11 @@
+{
+  "name": "type",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "open index.html"
+  },
+  "author": "",
+  "license": "ISC"
+}
