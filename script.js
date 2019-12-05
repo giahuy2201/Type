@@ -3,7 +3,9 @@ var randomWords = require('random-words')
 point = 0
 position = 0
 started = false
-sample = document.querySelector('.word-box')
+buffer = ''
+sampleTop = document.querySelector('.word-top')
+sampleBot = document.querySelector('.word-bot')
 updatePassage()
 input = document.querySelector('input')
 input.addEventListener('input', function () {
@@ -54,12 +56,47 @@ input.addEventListener('input', function () {
     }
 })
 function updatePassage() {
-    passage = randomWords(12).join(' ')
+    if (buffer == '') {
+        buffer = randomWords(8).join(' ')
+    }
+    passage = buffer
+    buffer = randomWords(8).join(' ')
     position = 0
+    fit2lines()
     updateSample()
 }
+function fit2lines() {
+    updateSample()
+    // check sampleTop
+    let topWords = document.querySelectorAll('.word-top > span')
+    var originWord = topWords[0]
+    for (let i = 0; i < topWords.length; i++) {
+        const word = topWords[i];
+        if (word.offsetTop > originWord.offsetTop) {
+            // console.log('top ' + i)
+            var list = passage.split(' ')
+            passage = list.splice(0, i).join(' ')
+            buffer = list.join(' ') + ' ' + buffer
+            break
+        }
+    }
+    // update to get the real change
+    updateSample()
+    // check sampleBot
+    let botWords = document.querySelectorAll('.word-bot > span')
+    originWord = botWords[0]
+    for (let i = 0; i < botWords.length; i++) {
+        const word = botWords[i];
+        if (word.offsetTop > originWord.offsetTop) {
+            // console.log('bot ' + i)
+            var list = buffer.split(' ')
+            buffer = list.splice(0, i).join(' ')
+            break
+        }
+    }
+}
 function referWord(position) {
-    return document.querySelector('.word-box > span:nth-child(' + (position + 1) + ')')
+    return document.querySelector('.word-top > span:nth-child(' + (position + 1) + ')')
 }
 function goodInput(sample, input) {
     return sample.indexOf(input) == 0
@@ -73,12 +110,18 @@ function peekInput() {
     return input.value
 }
 function updateSample() {
-    let list = passage.split(' ')
-    let formatedList = []
-    list.forEach(word => {
-        formatedList.push('<span>' + word + '</span>')
+    let listTop = passage.split(' ')
+    let formatedListTop = []
+    listTop.forEach(word => {
+        formatedListTop.push('<span>' + word + '</span>')
     });
-    sample.innerHTML = formatedList.join(' ')
+    sampleTop.innerHTML = formatedListTop.join(' ')
+    let listBot = buffer.split(' ')
+    let formatedListBot = []
+    listBot.forEach(word => {
+        formatedListBot.push('<span>' + word + '</span>')
+    });
+    sampleBot.innerHTML = formatedListBot.join(' ')
 }
 function updateTimer(minutes) {
     var timer = document.querySelector('#timer')
@@ -99,5 +142,5 @@ function countdown(minutes, done) {
 }
 function calculateWPM() {
     var p = document.querySelector('#point')
-    p.innerHTML = point
+    p.innerHTML = point+' wpm'
 }
