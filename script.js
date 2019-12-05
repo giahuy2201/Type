@@ -1,11 +1,9 @@
 var randomWords = require('random-words')
 
-sample = document.querySelector('.word-box')
-data = 'To read a short passage about people in English and feel comfortable you need to know your English level in reading skills'
-dataCursor = 0
 point = 0
 position = 0
 started = false
+sample = document.querySelector('.word-box')
 updatePassage()
 input = document.querySelector('input')
 input.addEventListener('input', function () {
@@ -55,13 +53,8 @@ input.addEventListener('input', function () {
         }
     }
 })
-function runOutWord() {
-    return position >= 18
-}
 function updatePassage() {
-    let list = data.split(' ')
-    passage = list.splice(dataCursor, 18).join(' ')
-    dataCursor += 18
+    passage = randomWords(12).join(' ')
     position = 0
     updateSample()
 }
@@ -79,16 +72,6 @@ function popInput() {
 function peekInput() {
     return input.value
 }
-function popSample(position) {
-    let list = passage.split(' ')
-    let word = list.splice(position, 1)
-    passage = list.reverse().join(' ')
-    return word
-}
-function peekSample(position) {
-    let list = passage.split(' ')
-    return list[position]
-}
 function updateSample() {
     let list = passage.split(' ')
     let formatedList = []
@@ -96,10 +79,6 @@ function updateSample() {
         formatedList.push('<span>' + word + '</span>')
     });
     sample.innerHTML = formatedList.join(' ')
-}
-function updatePoint() {
-    var p = document.querySelector('#point')
-    p.innerHTML = point
 }
 function updateTimer(minutes) {
     var timer = document.querySelector('#timer')
@@ -111,6 +90,7 @@ function countdown(minutes, done) {
     var timer = setInterval(function () {
         if (minutes == 0) {
             done()
+            clearInterval(timer)
         } else {
             minutes -= 1
             updateTimer(minutes)
@@ -118,5 +98,6 @@ function countdown(minutes, done) {
     }, 1000)
 }
 function calculateWPM() {
-    updatePoint()
+    var p = document.querySelector('#point')
+    p.innerHTML = point
 }

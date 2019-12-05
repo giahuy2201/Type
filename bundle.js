@@ -340,12 +340,11 @@ module.exports = words;
 // Export the word list as it is often useful
 words.wordList = wordList;
 },{}],2:[function(require,module,exports){
-var rdw = require('random-words')
-console.log(rdw(5))
+var randomWords = require('random-words')
 
 sample = document.querySelector('.word-box')
-data = 'To read a short passage about people in English and feel comfortable you need to know your English level in reading skills'
-dataCursor = 0
+// data = 'To read a short passage about people in English and feel comfortable you need to know your English level in reading skills'
+// dataCursor = 0
 point = 0
 position = 0
 started = false
@@ -354,7 +353,7 @@ input = document.querySelector('input')
 input.addEventListener('input', function () {
     if (!started) {
         started = true
-        countdown(60, calculateWPM)
+        countdown(10, calculateWPM)
     }
     if (input.value.includes(' ')) {
         let word = referWord(position)
@@ -399,12 +398,13 @@ input.addEventListener('input', function () {
     }
 })
 function runOutWord() {
-    return position >= 18
+    return position >= 16
 }
 function updatePassage() {
-    let list = data.split(' ')
-    passage = list.splice(dataCursor, 18).join(' ')
-    dataCursor += 18
+    // let list = data.split(' ')
+    // passage = list.splice(dataCursor, 18).join(' ')
+    // dataCursor += 18
+    passage = randomWords(16).join(' ')
     position = 0
     updateSample()
 }
@@ -454,6 +454,7 @@ function countdown(minutes, done) {
     var timer = setInterval(function () {
         if (minutes == 0) {
             done()
+            clearInterval(timer)
         } else {
             minutes -= 1
             updateTimer(minutes)
