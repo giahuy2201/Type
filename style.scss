@@ -1,0 +1,70 @@
+@use 'node_modules/bootstrap/scss/bootstrap';
+
+$font-type: 2em "Times New Roman", Times, serif;
+$font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.container {
+  font: $font-page;
+
+  .heading {
+    text-align: center;
+    font-size: 3em;
+    padding: 20px;
+  }
+
+  .main {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: $font-page;
+
+    .word-box {
+      border: 2px solid #000;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 20px;
+      font: $font-type;
+
+      .word {
+        padding: 3px;
+      }
+    }
+
+    .word-input {
+      font: $font-type;
+    }
+    
+    .extra {
+      display: flex;
+      justify-content: space-between;
+
+      #timer,
+      #point {
+        font-size: 2rem;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+      }
+    }
+  }
+}
+
+.highlight {
+  border-radius: 3px;
+  background-color: #ddd;
+}
+
+.mistake {
+  background-color: #fc0d1b;
+}
+
+.wrong {
+  color: #fc0d1b;
+}
+
+.right {
+  background: #fff;
+  color: #0f7e12;
+}
+
+#coder {
+  position: absolute;
+  bottom: 0;
+}

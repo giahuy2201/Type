@@ -1,22 +1,27 @@
-var randomWords = require('random-words')
+let randomWords = require('random-words');
+import 'bootstrap';
+import _ from 'lodash';
 
-point = 0
-position = 0
-started = false
-buffer = ''
-sampleTop = document.querySelector('.word-top')
-sampleBot = document.querySelector('.word-bot')
+let point = 0
+let position = 0
+let started = false
+let passage = ''
+let buffer = ''
+let sampleTop = document.querySelector('.top')
+let sampleBot = document.querySelector('.bot')
 updatePassage()
-input = document.querySelector('input')
+let input = document.querySelector('.word-input')
 input.addEventListener('input', function () {
+    // document.querySelector('.heading').innerHTML+='*'
+
     if (!started) {
         started = true
         countdown(60, calculateWPM)
     }
     if (input.value.includes(' ')) {
         let word = referWord(position)
-        inputText = popInput()
-        sampleText = word.innerHTML
+        let inputText = popInput()
+        let sampleText = word.innerHTML
         if (inputText == sampleText) {
             word.classList.add('right')
             point += 1
@@ -33,8 +38,7 @@ input.addEventListener('input', function () {
         word.classList.remove('highlight')
         position += 1
         let nextWord = referWord(position)
-        if (nextWord) {
-        } else {
+        if (!nextWord) {
             // update passage
             updatePassage()
             nextWord = referWord(position)
@@ -45,8 +49,8 @@ input.addEventListener('input', function () {
         let word = referWord(position)
         word.classList.remove('highlight')
         word.classList.add('highlight')
-        inputText = peekInput()
-        sampleText = word.innerHTML
+        let inputText = peekInput()
+        let sampleText = word.innerHTML
         if (goodInput(sampleText, inputText)) {
             word.classList.remove('mistake')
         } else {
@@ -57,10 +61,10 @@ input.addEventListener('input', function () {
 })
 function updatePassage() {
     if (buffer == '') {
-        buffer = randomWords(8).join(' ')
+        buffer = randomWords(10).join(' ')
     }
     passage = buffer
-    buffer = randomWords(8).join(' ')
+    buffer = randomWords(10).join(' ')
     position = 0
     fit2lines()
     updateSample()
@@ -68,13 +72,13 @@ function updatePassage() {
 function fit2lines() {
     updateSample()
     // check sampleTop
-    let topWords = document.querySelectorAll('.word-top > span')
-    var originWord = topWords[0]
+    let topWords = document.querySelectorAll('.top > .word')
+    let originWord = topWords[0]
     for (let i = 0; i < topWords.length; i++) {
         const word = topWords[i];
         if (word.offsetTop > originWord.offsetTop) {
             // console.log('top ' + i)
-            var list = passage.split(' ')
+            let list = passage.split(' ')
             passage = list.splice(0, i).join(' ')
             buffer = list.join(' ') + ' ' + buffer
             break
@@ -83,26 +87,26 @@ function fit2lines() {
     // update to get the real change
     updateSample()
     // check sampleBot
-    let botWords = document.querySelectorAll('.word-bot > span')
+    let botWords = document.querySelectorAll('.bot > .word')
     originWord = botWords[0]
     for (let i = 0; i < botWords.length; i++) {
         const word = botWords[i];
         if (word.offsetTop > originWord.offsetTop) {
             // console.log('bot ' + i)
-            var list = buffer.split(' ')
+            let list = buffer.split(' ')
             buffer = list.splice(0, i).join(' ')
             break
         }
     }
 }
 function referWord(position) {
-    return document.querySelector('.word-top > span:nth-child(' + (position + 1) + ')')
+    return document.querySelector('.top > .word:nth-child(' + (position + 1) + ')');
 }
 function goodInput(sample, input) {
     return sample.indexOf(input) == 0
 }
 function popInput() {
-    var text = input.value.trim()
+    let text = input.value.trim()
     input.value = ''
     return text
 }
@@ -113,34 +117,37 @@ function updateSample() {
     let listTop = passage.split(' ')
     let formatedListTop = []
     listTop.forEach(word => {
-        formatedListTop.push('<span>' + word + '</span>')
+        formatedListTop.push('<span class="word">' + word + '</span>')
     });
     sampleTop.innerHTML = formatedListTop.join(' ')
     let listBot = buffer.split(' ')
     let formatedListBot = []
     listBot.forEach(word => {
-        formatedListBot.push('<span>' + word + '</span>')
+        formatedListBot.push('<span class="word">' + word + '</span>')
     });
-    sampleBot.innerHTML = formatedListBot.join(' ')
+    sampleBot.innerHTML = formatedListBot.join(' ');
 }
-function updateTimer(minutes) {
-    var timer = document.querySelector('#timer')
-    let min = parseInt(minutes / 60)
-    let sec = minutes % 60
-    timer.innerHTML = min + ':' + sec
+function updateTimer(seconds) {
+    let timer = document.querySelector('#timer');
+    let min = parseInt(seconds / 60);
+    let sec = seconds % 60;
+    timer.innerHTML = min + ':' + sec;
 }
-function countdown(minutes, done) {
-    var timer = setInterval(function () {
-        if (minutes == 0) {
-            done()
-            clearInterval(timer)
-        } else {
-            minutes -= 1
-            updateTimer(minutes)
-        }
-    }, 1000)
+
+function countdown(seconds, done) {
+    let timer = setInterval(function () {
+       if(seconds ==0){
+           clearInterval(timer)
+           done()
+       }else{
+           seconds--;
+           updateTimer(seconds);
+       }
+    }, 1000);
 }
+
+
 function calculateWPM() {
-    var p = document.querySelector('#point')
-    p.innerHTML = point+' wpm'
+    let p = document.querySelector('#point')
+    p.innerHTML = point + ' wpm'
 }

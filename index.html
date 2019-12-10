@@ -3,33 +3,31 @@
 
 <head>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1 class="heading">Type</h1>
-    
-    <div class="wrapper">
-        <div class="word-box">
-            <div class="word-top">
+    <div class="container">
+        <!-- Page heading -->
+        <h1 class="heading">Type</h1>
 
+        <!-- Main -->
+        <div class="main">
+            <!-- Sample box -->
+            <div class="word-box">
+                <div class="top"></div>
+                <div class="bot"></div>
             </div>
-            <div class="word-bot">
-
+            <!-- Input field -->
+            <input class="form-control word-input" type="text">
+            <div class="extra">
+                <div id="timer" class="badge badge-info mt-3"></div>
+                <div id="point" class="badge text-success bg-light mt-3"></div>
             </div>
         </div>
-        <input class="form-control" type="text">
-        <div class="options">
-            <div id="timer" class="badge badge-info mt-3"></div>
-            <div id="point" class="badge text-success bg-light mt-3"></div>
-        </div>
-
+        <p id="coder">by giahuy2201</p>
     </div>
-    <p id='cp'>by giahuy2201</p>
-
-
-        <script src="bundle.js"></script>
+    <!-- JavaScript -->
+    <script src="bundle.js"></script>
 </body>
 
 </html>
