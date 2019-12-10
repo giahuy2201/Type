@@ -1,6 +1,11 @@
 let randomWords = require('random-words');
 import 'bootstrap';
+import 'jquery';
 import _ from 'lodash';
+
+// -------------------------------------
+// Setup
+// -------------------------------------
 
 let point = 0
 let position = 0
@@ -19,7 +24,7 @@ input.addEventListener('input', function () {
         countdown(60, calculateWPM)
     }
     if (input.value.includes(' ')) {
-        let word = referWord(position)
+        let word = getWord(position)
         let inputText = popInput()
         let sampleText = word.innerHTML
         if (inputText == sampleText) {
@@ -37,16 +42,16 @@ input.addEventListener('input', function () {
         // highlight the next word instead
         word.classList.remove('highlight')
         position += 1
-        let nextWord = referWord(position)
+        let nextWord = getWord(position)
         if (!nextWord) {
             // update passage
             updatePassage()
-            nextWord = referWord(position)
+            nextWord = getWord(position)
         }
         nextWord.classList.add('highlight')
         // updatePoint()
     } else {
-        let word = referWord(position)
+        let word = getWord(position)
         word.classList.remove('highlight')
         word.classList.add('highlight')
         let inputText = peekInput()
@@ -59,6 +64,48 @@ input.addEventListener('input', function () {
         }
     }
 })
+
+// -------------------------------------
+// Functional
+// -------------------------------------
+
+function getWord(position) {
+    return document.querySelector('.top > .word:nth-child(' + (position + 1) + ')');
+}
+function goodInput(sample, input) {
+    return sample.indexOf(input) == 0
+}
+function popInput() {
+    let text = input.value.trim()
+    input.value = ''
+    return text
+}
+function peekInput() {
+    return input.value
+}
+
+function countdown(seconds, done) {
+    let timer = setInterval(function () {
+        if (seconds == 0) {
+            clearInterval(timer)
+            done()
+        } else {
+            seconds--;
+            updateTimer(seconds);
+        }
+    }, 1000);
+}
+
+
+function calculateWPM() {
+    let p = document.querySelector('#point')
+    p.innerHTML = point + ' wpm'
+}
+
+// -------------------------------------
+// Update UI
+// -------------------------------------
+
 function updatePassage() {
     if (buffer == '') {
         buffer = randomWords(10).join(' ')
@@ -69,6 +116,7 @@ function updatePassage() {
     fit2lines()
     updateSample()
 }
+
 function fit2lines() {
     updateSample()
     // check sampleTop
@@ -99,20 +147,6 @@ function fit2lines() {
         }
     }
 }
-function referWord(position) {
-    return document.querySelector('.top > .word:nth-child(' + (position + 1) + ')');
-}
-function goodInput(sample, input) {
-    return sample.indexOf(input) == 0
-}
-function popInput() {
-    let text = input.value.trim()
-    input.value = ''
-    return text
-}
-function peekInput() {
-    return input.value
-}
 function updateSample() {
     let listTop = passage.split(' ')
     let formatedListTop = []
@@ -132,22 +166,4 @@ function updateTimer(seconds) {
     let min = parseInt(seconds / 60);
     let sec = seconds % 60;
     timer.innerHTML = min + ':' + sec;
-}
-
-function countdown(seconds, done) {
-    let timer = setInterval(function () {
-       if(seconds ==0){
-           clearInterval(timer)
-           done()
-       }else{
-           seconds--;
-           updateTimer(seconds);
-       }
-    }, 1000);
-}
-
-
-function calculateWPM() {
-    let p = document.querySelector('#point')
-    p.innerHTML = point + ' wpm'
 }

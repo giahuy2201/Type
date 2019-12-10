@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "open index.html"
+    "test": "open index.html",
+    "build": "webpack",
+    "watch": "webpack --progress --watch"
   },
-  "author": "",
+  "author": "giahuy2201",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.4.1",
@@ -16,7 +18,9 @@
     "random-words": "^1.1.0"
   },
   "devDependencies": {
+    "node-sass": "^4.13.0",
     "sass": "^1.23.7",
+    "sass-loader": "^8.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   }

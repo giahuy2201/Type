@@ -1,10 +1,47 @@
 @use 'node_modules/bootstrap/scss/bootstrap';
 
+// General settings
 $font-type: 2em "Times New Roman", Times, serif;
 $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
+:root {
+  // Light theme default
+  --theme-background: #fff;
+  --theme-text: #000;
+  --theme-sample: #fff;
+  --theme-input: #fff;
+  --theme-border: #000;
+  --theme-focus: #ddd;
+  --theme-right: #0f7e12;
+  --theme-wrong: #fc0d1b;
+  // Dark theme
+  --dark-text: #fff;
+  --dark-background: #1b191a;
+  --dark-sample: #242526;
+  --dark-input: #3a3b3c;
+  --dark-border: #3c3e40;
+  --dark-focus: #4e4f50;
+  --dark-right: #37a150;
+  --dark-wrong: #ce2642;
+}
 
-.container {
+// change theme
+@media (prefers-color-scheme: dark) {
+  :root {
+    --theme-background: var(--dark-background);
+    --theme-text: var(--dark-text);
+    --theme-sample: var(--dark-sample);
+    --theme-input: var(--dark-input);
+    --theme-border: var(--dark-border);
+    --theme-focus: var(--dark-focus);
+    --theme-right: var(--dark-right);
+    --theme-wrong: var(--dark-wrong);
+  }
+}
+
+.page {
   font: $font-page;
+  background-color: var(--theme-background);
+  color: var(--theme-text);
 
   .heading {
     text-align: center;
@@ -18,11 +55,17 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-family: $font-page;
 
     .word-box {
-      border: 2px solid #000;
+      border: 2px solid var(--theme-border);
+      background-color: var(--theme-sample);
       border-radius: 4px;
       padding: 10px;
       margin-bottom: 20px;
       font: $font-type;
+
+      .top,
+      .bot {
+        padding: 3px;
+      }
 
       .word {
         padding: 3px;
@@ -31,8 +74,15 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     .word-input {
       font: $font-type;
+      background-color: var(--theme-input);
+      border: 1px solid var(--theme-border);
+      color: var(--theme-text);
+
+      &:focus {
+        box-shadow: none;
+      }
     }
-    
+
     .extra {
       display: flex;
       justify-content: space-between;
@@ -48,20 +98,19 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 .highlight {
   border-radius: 3px;
-  background-color: #ddd;
+  background-color: var(--theme-focus);
 }
 
 .mistake {
-  background-color: #fc0d1b;
+  background-color: var(--theme-wrong);
 }
 
 .wrong {
-  color: #fc0d1b;
+  color: var(--theme-wrong);
 }
 
 .right {
-  background: #fff;
-  color: #0f7e12;
+  color: var(--theme-right);
 }
 
 #coder {
