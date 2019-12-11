@@ -9910,6 +9910,7 @@ h3 {
   font: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: var(--theme-background);
   color: var(--theme-text);
+  padding: 10px;
 }
 .page .heading {
   text-align: center;

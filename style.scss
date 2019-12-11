@@ -42,6 +42,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font: $font-page;
   background-color: var(--theme-background);
   color: var(--theme-text);
+  padding: 10px;
 
   .heading {
     text-align: center;
