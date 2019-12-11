@@ -1,3 +1,8 @@
+/**
+ * Typing machine
+ * by giahuy2201 (giahuy2201@outlook.com)
+ */
+
 let randomWords = require('random-words');
 import 'bootstrap';
 
@@ -8,7 +13,7 @@ import 'bootstrap';
 let rightWords = 0
 let timer = new Timer(document.querySelector('#timer'), 60, displayWPM);
 let wordInput = new WordInput(document.querySelector('.word-input'));
-let wordBox = new WordBox(document.querySelector('.top'),document.querySelector('.bot'));
+let wordBox = new WordBox(document.querySelector('.top'), document.querySelector('.bot'));
 wordBox.update();
 wordInput.listen(keystroke);
 
@@ -49,6 +54,12 @@ function keystroke() {
 function displayWPM() {
     let wpm = document.querySelector('#point')
     wpm.innerHTML = rightWords + ' wpm'
+    let best = localStorage.getItem('best') || 0;
+    if (rightWords > best) {
+        best = rightWords;
+        localStorage.setItem('best', best)
+    }
+    wpm.setAttribute('title','Best is '+best)
 }
 
 // -------------------------------------
