@@ -1,4 +1,4 @@
-@use 'node_modules/bootstrap/scss/bootstrap';
+@use '../node_modules/bootstrap/scss/bootstrap';
 
 // General settings
 $font-type: 2em "Times New Roman", Times, serif;
@@ -163,6 +163,9 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-shadow: -3px 0 16px rgba($color: #000000, $alpha: 0.25);
   overflow-y: scroll;
 
+  hr{
+    border-color: var(--theme-border);
+  }
   .panel__heading {
     text-align: center;
   }
@@ -203,15 +206,15 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
       justify-content: flex-end;
 
       &:first-child {
-        background: url("./seed_cacti.png");
+        background: url("../images/themes/seed_cacti.png");
         background-size: 150px;
       }
       &:nth-child(2) {
-        background: url("./seed_flora.png");
+        background: url("../images/themes/seed_flora.png");
         background-size: 80px;
       }
       &:nth-child(3) {
-        background: url("./seed_pencil.png");
+        background: url("../images/themes/seed_pencil.png");
         background-size: 100px;
       }
       &:last-child {
@@ -265,7 +268,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
       right: 0;
       margin: auto 0;
       box-shadow: 0 0 15px #2020203d;
-      background: white url("./sun.png");
+      background: white url("../images/icons/sun.png");
       background-repeat: no-repeat;
       background-position: center;
       background-size: 24px;
@@ -283,7 +286,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-transform: translateX(24px);
     -ms-transform: translateX(24px);
     transform: translateX(24px);
-    background: white url("./moon.png");
+    background: white url("../images/icons/moon.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 24px;

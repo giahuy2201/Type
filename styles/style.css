@@ -10019,6 +10019,9 @@ h3 {
   box-shadow: -3px 0 16px rgba(0, 0, 0, 0.25);
   overflow-y: scroll;
 }
+#panel hr {
+  border-color: var(--theme-border);
+}
 #panel .panel__heading {
   text-align: center;
 }
@@ -10059,15 +10062,15 @@ h3 {
   justify-content: flex-end;
 }
 #panel .panel__theme .theme-option:first-child {
-  background: url("./seed_cacti.png");
+  background: url("../images/themes/seed_cacti.png");
   background-size: 150px;
 }
 #panel .panel__theme .theme-option:nth-child(2) {
-  background: url("./seed_flora.png");
+  background: url("../images/themes/seed_flora.png");
   background-size: 80px;
 }
 #panel .panel__theme .theme-option:nth-child(3) {
-  background: url("./seed_pencil.png");
+  background: url("../images/themes/seed_pencil.png");
   background-size: 100px;
 }
 #panel .panel__theme .theme-option:last-child {
@@ -10118,7 +10121,7 @@ h3 {
   right: 0;
   margin: auto 0;
   box-shadow: 0 0 15px #2020203d;
-  background: white url("./sun.png");
+  background: white url("../images/icons/sun.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 24px;
@@ -10133,7 +10136,7 @@ h3 {
   -webkit-transform: translateX(24px);
   -ms-transform: translateX(24px);
   transform: translateX(24px);
-  background: white url("./moon.png");
+  background: white url("../images/icons/moon.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 24px;
