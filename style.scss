@@ -138,6 +138,9 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
 #coder {
   position: absolute;
   bottom: 0;
+  margin-bottom: 16px;
+  text-decoration: none;
+  color: var(--theme-text);
 }
 
 // Options panel
@@ -188,40 +191,38 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
   }
   .panel__theme {
-    .theme__list {
-      .theme__item {
-        width: 100%;
-        height: 100px;
-        margin: 20px 0;
-        padding: 10px;
-        border: 1px solid var(--theme-border);
-        border-radius: 4px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
+    .theme-option {
+      width: 100%;
+      height: 100px;
+      margin: 20px 0;
+      padding: 10px;
+      border: 1px solid var(--theme-border);
+      border-radius: 4px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
 
-        &:first-child {
-          background: url("./seed_cacti.png");
-          background-size: 150px;
-        }
-        &:nth-child(2) {
-          background: url("./seed_flora.png");
-          background-size: 80px;
-        }
-        &:nth-child(3) {
-          background: url("./seed_pencil.png");
-          background-size: 100px;
-        }
-        &:last-child {
-          margin-bottom: 0;
-        }
-        &:hover {
-          border: 2px solid #1c77c2;
-        }
-        .theme__heading {
-          color: var(--theme-text);
-          box-shadow: -3px 3px 6px var(--theme-background);
-        }
+      &:first-child {
+        background: url("./seed_cacti.png");
+        background-size: 150px;
+      }
+      &:nth-child(2) {
+        background: url("./seed_flora.png");
+        background-size: 80px;
+      }
+      &:nth-child(3) {
+        background: url("./seed_pencil.png");
+        background-size: 100px;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:hover {
+        border: 2px solid #1c77c2;
+      }
+      .theme__heading {
+        color: var(--theme-text);
+        box-shadow: -3px 3px 6px var(--theme-background);
       }
     }
   }

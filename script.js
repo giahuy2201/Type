@@ -7,115 +7,21 @@ let randomWords = require('random-words');
 import 'bootstrap';
 
 // -------------------------------------
-// Setup
+// Setup variables
 // -------------------------------------
 
-let rightWords = 0
+let rightWords = 0; // points
 let timer = new Timer(document.querySelector('#timer'), 60, displayWPM);
 let wordInput = new WordInput(document.querySelector('.word-input'));
-let wordBox = new WordBox(document.querySelector('.top'), document.querySelector('.bot'));
-let body = document.querySelector('body');
-let darkModeCheck = document.querySelector('#dark-switch > input');
-let darkAutoCheck = document.querySelector('.auto');
-let darkSwitch = document.querySelector('.dark-switch');
-let themes = document.querySelectorAll('.theme__item');
-let typingOptions = document.querySelectorAll('.mode__item > input');
-let selectedTheme;
-wordBox.update(true);
-updateAppearance();
+let wordBox = new WordBox(document.querySelector('.top'), document.querySelector('.bot'), document.querySelectorAll('.typing-option input'));
+let settingsPanel = new Settings(document.querySelector('body'), document.querySelectorAll('.typing-option input'), document.querySelectorAll('.dark-option input'), document.querySelectorAll('.theme-option'));
+wordBox.update();
+settingsPanel.update();
+settingsPanel.listen();
 wordInput.listen(keystroke);
 
 // -------------------------------------
-// Dark mode auto activate
-// -------------------------------------
-// Dark - light switch
-darkModeCheck.addEventListener('change', function () {
-    localStorage.setItem('darkMode', darkModeCheck.checked);
-    updateAppearance()
-})
-// Auto checkbox
-darkAutoCheck.addEventListener('change', function () {
-    localStorage.setItem('darkAuto', darkAutoCheck.checked);
-    updateAppearance()
-})
-
-// -------------------------------------
-// Local saved data from localStorage
-// -------------------------------------
-
-function updateAppearance() {
-    let darkAuto = localStorage.getItem('darkAuto') == 'true' ? true : false;
-    let darkMode = localStorage.getItem('darkMode') == 'true' ? true : false;
-    let themeIndex = localStorage.getItem('theme') || 0;
-    // update switches
-    darkAutoCheck.checked = darkAuto;
-    darkModeCheck.checked = darkMode;
-    // apply to appearance
-    if (darkAuto) {
-        body.setAttribute('id', 'dark-auto');
-        disable(darkSwitch);
-    } else {
-        body.removeAttribute('id');
-        enable(darkSwitch);
-        body.classList.remove('dark-mode');
-        if (darkMode) {
-            body.classList.add('dark-mode');
-        }
-    }
-    // theme
-    themes.forEach(function (element) {
-        element.classList.remove('theme-selected');
-    })
-    let url = '';
-    if (themeIndex != 0) {
-        selectedTheme = themes[themeIndex - 1]
-        selectedTheme.classList.add('theme-selected');
-        url = getComputedStyle(selectedTheme, false).backgroundImage;
-    }
-    body.style.backgroundImage = url;
-    body.style.backgroundSize = '200px';
-}
-function disable(document) {
-    document.style.setProperty('filter', 'grayscale(100%)');
-    document.children[0].disabled = true;
-}
-function enable(document) {
-    document.style.removeProperty('filter');
-    document.children[0].disabled = false;
-}
-
-// -------------------------------------
-// Theme select
-// -------------------------------------
-
-themes.forEach(function (theme, index) {
-    theme.addEventListener('click', function () {
-        if (this.classList.contains('theme-selected')) {
-            localStorage.setItem('theme', '');
-        } else {
-            localStorage.setItem('theme', index + 1);
-        }
-        updateAppearance();
-    })
-});
-
-// -------------------------------------
-// Typing options
-// -------------------------------------
-
-typingOptions.forEach(function (option) {
-    option.addEventListener('click', function () {
-        // Grab all checkbox info and save
-        typingOptions.forEach(function (opt) {
-            let id = opt.getAttribute('id');
-            localStorage.setItem(id, opt.checked);
-        })
-        wordBox.update(true);
-    })
-});
-
-// -------------------------------------
-// Input listener
+// Page controls
 // -------------------------------------
 
 let panel = document.querySelector('#panel');
@@ -126,6 +32,23 @@ let more = document.querySelector('#more');
 more.addEventListener('mouseover', function () {
     panel.style.setProperty('display', 'block');
 })
+
+// Show point
+function displayWPM() {
+    let wpm = document.querySelector('#point')
+    wpm.innerHTML = rightWords + ' wpm'
+    // Save the best result
+    let best = localStorage.getItem('best') || 0;
+    if (rightWords > best) {
+        best = rightWords;
+        localStorage.setItem('best', best)
+    }
+    wpm.setAttribute('title', 'Best is ' + best)
+}
+
+// -------------------------------------
+// Input listener
+// -------------------------------------
 
 function keystroke() {
     // Start timer
@@ -157,16 +80,91 @@ function keystroke() {
     }
 }
 
-function displayWPM() {
-    let wpm = document.querySelector('#point')
-    wpm.innerHTML = rightWords + ' wpm'
-    // Save the best result
-    let best = localStorage.getItem('best') || 0;
-    if (rightWords > best) {
-        best = rightWords;
-        localStorage.setItem('best', best)
+// -------------------------------------
+// Settings model
+// -------------------------------------
+
+function Settings(page, typingOptions, darkOptions, themeOptions) {
+    this.page = page;
+    this.typingOptions = typingOptions;
+    this.darkOptions = darkOptions
+    this.themeOptions = themeOptions;
+    this.selectedTheme = null;
+
+    // Get data from localStorage and show on option panel
+    this.update = function () {
+        let darkAuto = localStorage.getItem('darkAuto') == 'true' ? true : false;
+        let darkMode = localStorage.getItem('darkMode') == 'true' ? true : false;
+        let themeIndex = localStorage.getItem('theme') || 0;
+        let darkAutoCheck = darkOptions[1];
+        let darkModeCheck = darkOptions[0];
+        let darkSwitch = darkModeCheck.parentNode;
+        // update switches
+        darkAutoCheck.checked = darkAuto;
+        darkModeCheck.checked = darkMode;
+        // remove switch force class
+        this.page.classList.remove('dark-mode');
+        // apply to appearance
+        if (darkAuto) {
+            this.page.setAttribute('id', 'dark-auto');
+            // disable dark switch
+            darkSwitch.style.setProperty('filter', 'grayscale(100%)');
+            darkModeCheck.disabled = true;
+        } else {
+            this.page.removeAttribute('id');
+            darkSwitch.style.removeProperty('filter');
+            darkModeCheck.disabled = false;
+            if (darkMode) {
+                this.page.classList.add('dark-mode');
+            }
+        }
+        // theme
+        themeOptions.forEach(function (option) {
+            option.classList.remove('theme-selected');
+        })
+        let url = '';
+        if (themeIndex != 0) {
+            this.selectedTheme = this.themeOptions[themeIndex - 1]
+            this.selectedTheme.classList.add('theme-selected');
+            url = getComputedStyle(this.selectedTheme, false).backgroundImage;
+        }
+        this.page.style.backgroundImage = url;
+        this.page.style.backgroundSize = '200px';
     }
-    wpm.setAttribute('title', 'Best is ' + best)
+    // add listeners to add settings
+    this.listen = function () {
+        let settings = this;
+        // typing options
+        typingOptions.forEach(function (option) {
+            option.addEventListener('click', function () {
+                // Grab all checkbox info and save
+                typingOptions.forEach(function (opt) {
+                    let name = opt.getAttribute('name');
+                    localStorage.setItem(name, opt.checked);
+                })
+                wordBox.update(true);
+            })
+        });
+        // dark options
+        darkOptions.forEach(option => {
+            option.addEventListener('click', function () {
+                let name = option.getAttribute('name');
+                localStorage.setItem(name, option.checked);
+                settings.update();
+            })
+        });
+        // theme options
+        themeOptions.forEach(function (option, index) {
+            option.addEventListener('click', function () {
+                if (this.classList.contains('theme-selected')) {
+                    localStorage.setItem('theme', '');
+                } else {
+                    localStorage.setItem('theme', index + 1);
+                }
+                settings.update();
+            })
+        });
+    }
 }
 
 // -------------------------------------
@@ -186,11 +184,15 @@ function Word(document = undefined) {
     this.removeClass = function (className) {
         this.document.classList.remove(className);
     }
-    this.generate = function (number, easy = true, leftHand = true, rightHand = true) {
+    // Generate words with conditions
+    this.generate = function (number, typingModes) {
+        let easyMode = typingModes.easyMode;
+        let leftHandMode = typingModes.leftHandMode;
+        let rightHandMode = typingModes.rightHandMode;
         let list = [];
         for (let i = 0; i < number; i++) {
             let word = randomWords();
-            if (easy) {
+            if (easyMode == true) {
                 // console.log(word+': '+word.length);
                 // Check easy
                 if (word.length > 6) {
@@ -199,9 +201,9 @@ function Word(document = undefined) {
                     continue;
                 }
             }
-            if (leftHand != rightHand) {
+            if (leftHandMode != rightHandMode) {
                 let keyList = [];
-                if (leftHand) {
+                if (leftHandMode == true) {
                     keyList = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b'];
                 } else {
                     keyList = ['y', 'u', 'i', 'o', 'p', 'h', 'j', 'k', 'l', 'n', 'm'];
@@ -228,7 +230,8 @@ function Word(document = undefined) {
 // WordBox model
 // -------------------------------------
 
-function WordBox(topDocument, botDocument) {
+function WordBox(topDocument, botDocument, typingOptions) {
+    this.typingOptions = typingOptions;
     this.topLine = topDocument;
     this.botLine = botDocument;
     this.topText = '';
@@ -249,22 +252,20 @@ function WordBox(topDocument, botDocument) {
         return new Word(this.topLine.children[this.iterator])
     }
     this.update = function (optionsChanged = false) {
+        // Load typing settings
+        let typingModes = {};
+        typingOptions.forEach(function (option) {
+            let name = option.getAttribute('name');
+            typingModes[name] = (localStorage.getItem(name) == 'true' ? true : false);
+            option.checked = typingModes[name];
+        });
         // Get settings
-        let easyMode = localStorage.getItem('easyMode') == 'true' ? true : false;
-        let leftHandMode = localStorage.getItem('leftHandMode') == 'true' ? true : false;
-        let rightHandMode = localStorage.getItem('rightHandMode') == 'true' ? true : false;
-        // then assign
-        if (optionsChanged) {
-            typingOptions[0].checked = easyMode;
-            typingOptions[1].checked = leftHandMode;
-            typingOptions[2].checked = rightHandMode;
-        }
         let words = new Word();
         if (this.botText == '' || optionsChanged) {
-            this.botText = words.generate(10, easyMode, leftHandMode, rightHandMode).join(' ')
+            this.botText = words.generate(16, typingModes).join(' ');
         }
         this.topText = this.botText;
-        this.botText = words.generate(10, easyMode, leftHandMode, rightHandMode).join(' ')
+        this.botText = words.generate(16, typingModes).join(' ');
         this.iterator = 0;
         // Fit words into 2 lines
         this.calibrate();

@@ -26,53 +26,60 @@
                 title="Best is 60"></div>
         </div>
     </div>
-    <p id="coder">by giahuy2201</p>
+    <a id="coder" href="https://giahuy2201.github.io/">by giahuy2201</a>
+
+    <!-- Options panel -->
     <p id="more">more</p>
     <div id="panel">
         <h2 class="panel__heading">Options</h2>
         <hr>
+        <!-- Typing options -->
         <div class="panel__mode">
             <h3 class="option__heading">Mode: </h3>
             <div class="mode__list">
-                <div class="mode__item">
-                    <input type="checkbox" id="easyMode">
+                <div class="mode__item typing-option">
+                    <input type="checkbox" name="easyMode">
                     <label for="easyMode">Easy</label>
                 </div>
-                <div class="mode__item">
-                    <input type="checkbox" id="leftHandMode">
+                <div class="mode__item typing-option">
+                    <input type="checkbox" name="leftHandMode">
                     <label for="leftHandMode">Left-hand</label>
                 </div>
-                <div class="mode__item">
-                    <input type="checkbox" id="rightHandMode">
+                <div class="mode__item typing-option">
+                    <input type="checkbox" name="rightHandMode">
                     <label for="rightHandMode">Right-hand</label>
                 </div>
             </div>
         </div>
+        <!-- Dark mode options -->
         <div class="panel__dark">
             <h3 class="option__heading">Dark mode: </h3>
             <div class="mode__list">
-                <div class="mode__item">
+                <div class="mode__item dark-option">
                     <label id="dark-switch" class="dark-switch">
-                        <input type="checkbox" class="">
+                        <input type="checkbox" name="darkMode">
                         <span class="dark-switch__slider dark-switch__knot"></span>
                     </label>
                 </div>
-                <div class="mode__item">
-                    <input type="checkbox" class="auto" id="auto">
-                    <label for="auto">Auto</label>
+                <div class="mode__item dark-option">
+                    <label for="darkAuto">
+                        <input type="checkbox" name="darkAuto" id="darkAuto">
+                        <span>Auto</span>
+                    </label>
                 </div>
             </div>
         </div>
+        <!-- Theme options -->
         <div class="panel__theme">
             <h3 class="option__heading">Theme: </h3>
-            <div class="theme__list">
-                <div class="theme__item">
+            <div class="node__list">
+                <div class="node__item theme-option">
                     <h4 class="theme__heading">Cacti</h4>
                 </div>
-                <div class="theme__item">
+                <div class="node__item theme-option">
                     <h4 class="theme__heading">Flora</h4>
                 </div>
-                <div class="theme__item">
+                <div class="node__item theme-option">
                     <h4 class="theme__heading">School</h4>
                 </div>
             </div>
