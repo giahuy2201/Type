@@ -19,8 +19,9 @@ let darkModeCheck = document.querySelector('#dark-switch > input');
 let darkAutoCheck = document.querySelector('.auto');
 let darkSwitch = document.querySelector('.dark-switch');
 let themes = document.querySelectorAll('.theme__item');
+let typingOptions = document.querySelectorAll('.mode__item > input');
 let selectedTheme;
-wordBox.update();
+wordBox.update(true);
 updateAppearance();
 wordInput.listen(keystroke);
 
@@ -43,28 +44,23 @@ darkAutoCheck.addEventListener('change', function () {
 // -------------------------------------
 
 function updateAppearance() {
-    let darkAuto = localStorage.getItem('darkAuto');
-    let darkMode = localStorage.getItem('darkMode');
+    let darkAuto = localStorage.getItem('darkAuto') == 'true' ? true : false;
+    let darkMode = localStorage.getItem('darkMode') == 'true' ? true : false;
     let themeIndex = localStorage.getItem('theme') || 0;
-    // dark auto
-    if (darkAuto == 'true') {
-        darkAutoCheck.checked = true;
+    // update switches
+    darkAutoCheck.checked = darkAuto;
+    darkModeCheck.checked = darkMode;
+    // apply to appearance
+    if (darkAuto) {
         body.setAttribute('id', 'dark-auto');
         disable(darkSwitch);
     } else {
-        darkAutoCheck.checked = false;
         body.removeAttribute('id');
         enable(darkSwitch);
         body.classList.remove('dark-mode');
-        if (darkMode == 'true') {
+        if (darkMode) {
             body.classList.add('dark-mode');
         }
-    }
-    // dark switch
-    if (darkMode == 'true') {
-        darkModeCheck.checked = true;
-    } else {
-        darkModeCheck.checked = false;
     }
     // theme
     themes.forEach(function (element) {
@@ -96,21 +92,27 @@ themes.forEach(function (theme, index) {
     theme.addEventListener('click', function () {
         if (this.classList.contains('theme-selected')) {
             localStorage.setItem('theme', '');
-        }else{
-            localStorage.setItem('theme', index+1); 
+        } else {
+            localStorage.setItem('theme', index + 1);
         }
         updateAppearance();
     })
 });
 
-function activateTheme(url) {
-    if (url) {
-        body.style.backgroundImage = url;
-        body.style.backgroundSize = '200px';
-    } else {
-        body.style.backgroundImage = '';
-    }
-}
+// -------------------------------------
+// Typing options
+// -------------------------------------
+
+typingOptions.forEach(function (option) {
+    option.addEventListener('click', function () {
+        // Grab all checkbox info and save
+        typingOptions.forEach(function (opt) {
+            let id = opt.getAttribute('id');
+            localStorage.setItem(id, opt.checked);
+        })
+        wordBox.update(true);
+    })
+});
 
 // -------------------------------------
 // Input listener
@@ -171,7 +173,7 @@ function displayWPM() {
 // Word model
 // -------------------------------------
 
-function Word(document) {
+function Word(document = undefined) {
     this.document = document;
 
     this.text = function () {
@@ -183,6 +185,42 @@ function Word(document) {
     }
     this.removeClass = function (className) {
         this.document.classList.remove(className);
+    }
+    this.generate = function (number, easy = true, leftHand = true, rightHand = true) {
+        let list = [];
+        for (let i = 0; i < number; i++) {
+            let word = randomWords();
+            if (easy) {
+                // console.log(word+': '+word.length);
+                // Check easy
+                if (word.length > 6) {
+                    // Try again
+                    i--;
+                    continue;
+                }
+            }
+            if (leftHand != rightHand) {
+                let keyList = [];
+                if (leftHand) {
+                    keyList = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b'];
+                } else {
+                    keyList = ['y', 'u', 'i', 'o', 'p', 'h', 'j', 'k', 'l', 'n', 'm'];
+                }
+                let j = 0;
+                for (; j < word.length; j++) {
+                    if (!keyList.includes(word[j].toLowerCase())) {
+                        break;
+                    }
+                }
+                if (j < word.length) {
+                    i--;
+                    continue;
+                }
+                // console.log(word)
+            }
+            list.push(word);
+        }
+        return list;
     }
 }
 
@@ -210,12 +248,23 @@ function WordBox(topDocument, botDocument) {
         }
         return new Word(this.topLine.children[this.iterator])
     }
-    this.update = function () {
-        if (this.botText == '') {
-            this.botText = randomWords(10).join(' ')
+    this.update = function (optionsChanged = false) {
+        // Get settings
+        let easyMode = localStorage.getItem('easyMode') == 'true' ? true : false;
+        let leftHandMode = localStorage.getItem('leftHandMode') == 'true' ? true : false;
+        let rightHandMode = localStorage.getItem('rightHandMode') == 'true' ? true : false;
+        // then assign
+        if (optionsChanged) {
+            typingOptions[0].checked = easyMode;
+            typingOptions[1].checked = leftHandMode;
+            typingOptions[2].checked = rightHandMode;
+        }
+        let words = new Word();
+        if (this.botText == '' || optionsChanged) {
+            this.botText = words.generate(10, easyMode, leftHandMode, rightHandMode).join(' ')
         }
         this.topText = this.botText;
-        this.botText = randomWords(10).join(' ')
+        this.botText = words.generate(10, easyMode, leftHandMode, rightHandMode).join(' ')
         this.iterator = 0;
         // Fit words into 2 lines
         this.calibrate();
