@@ -6,6 +6,9 @@
 let randomWords = require('random-words');
 import 'bootstrap';
 
+// Mobile prevent
+mobileWarning(document.querySelector('body'));
+
 // -------------------------------------
 // Setup variables
 // -------------------------------------
@@ -32,6 +35,16 @@ let more = document.querySelector('#more');
 more.addEventListener('mouseover', function () {
     panel.style.setProperty('display', 'block');
 })
+
+// Don't allow devices with touchscreen
+function mobileWarning(page){
+    if('ontouchstart' in document.documentElement){
+        let msg ='It seems like you are not using a physical keyboard! My website is truthfully made for serious coders & typers. Have fun :)';
+        page.innerHTML='<div class="shadow p-3 mb-5 bg-white rounded m-5">'+msg+'</div>'
+        // Terminate the program
+        throw 'Unsupported device!';
+    }
+}
 
 // Show point
 function displayWPM() {
