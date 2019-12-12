@@ -14,12 +14,116 @@ let rightWords = 0
 let timer = new Timer(document.querySelector('#timer'), 60, displayWPM);
 let wordInput = new WordInput(document.querySelector('.word-input'));
 let wordBox = new WordBox(document.querySelector('.top'), document.querySelector('.bot'));
+let body = document.querySelector('body');
+let darkModeCheck = document.querySelector('#dark-switch > input');
+let darkAutoCheck = document.querySelector('.auto');
+let darkSwitch = document.querySelector('.dark-switch');
+let themes = document.querySelectorAll('.theme__item');
+let selectedTheme;
 wordBox.update();
+updateAppearance();
 wordInput.listen(keystroke);
+
+// -------------------------------------
+// Dark mode auto activate
+// -------------------------------------
+// Dark - light switch
+darkModeCheck.addEventListener('change', function () {
+    localStorage.setItem('darkMode', darkModeCheck.checked);
+    updateAppearance()
+})
+// Auto checkbox
+darkAutoCheck.addEventListener('change', function () {
+    localStorage.setItem('darkAuto', darkAutoCheck.checked);
+    updateAppearance()
+})
+
+// -------------------------------------
+// Local saved data from localStorage
+// -------------------------------------
+
+function updateAppearance() {
+    let darkAuto = localStorage.getItem('darkAuto');
+    let darkMode = localStorage.getItem('darkMode');
+    let themeIndex = localStorage.getItem('theme') || 0;
+    // dark auto
+    if (darkAuto == 'true') {
+        darkAutoCheck.checked = true;
+        body.setAttribute('id', 'dark-auto');
+        disable(darkSwitch);
+    } else {
+        darkAutoCheck.checked = false;
+        body.removeAttribute('id');
+        enable(darkSwitch);
+        body.classList.remove('dark-mode');
+        if (darkMode == 'true') {
+            body.classList.add('dark-mode');
+        }
+    }
+    // dark switch
+    if (darkMode == 'true') {
+        darkModeCheck.checked = true;
+    } else {
+        darkModeCheck.checked = false;
+    }
+    // theme
+    themes.forEach(function (element) {
+        element.classList.remove('theme-selected');
+    })
+    let url = '';
+    if (themeIndex != 0) {
+        selectedTheme = themes[themeIndex - 1]
+        selectedTheme.classList.add('theme-selected');
+        url = getComputedStyle(selectedTheme, false).backgroundImage;
+    }
+    body.style.backgroundImage = url;
+    body.style.backgroundSize = '200px';
+}
+function disable(document) {
+    document.style.setProperty('filter', 'grayscale(100%)');
+    document.children[0].disabled = true;
+}
+function enable(document) {
+    document.style.removeProperty('filter');
+    document.children[0].disabled = false;
+}
+
+// -------------------------------------
+// Theme select
+// -------------------------------------
+
+themes.forEach(function (theme, index) {
+    theme.addEventListener('click', function () {
+        if (this.classList.contains('theme-selected')) {
+            localStorage.setItem('theme', '');
+        }else{
+            localStorage.setItem('theme', index+1); 
+        }
+        updateAppearance();
+    })
+});
+
+function activateTheme(url) {
+    if (url) {
+        body.style.backgroundImage = url;
+        body.style.backgroundSize = '200px';
+    } else {
+        body.style.backgroundImage = '';
+    }
+}
 
 // -------------------------------------
 // Input listener
 // -------------------------------------
+
+let panel = document.querySelector('#panel');
+panel.addEventListener('mouseleave', function () {
+    panel.style.setProperty('display', 'none');
+})
+let more = document.querySelector('#more');
+more.addEventListener('mouseover', function () {
+    panel.style.setProperty('display', 'block');
+})
 
 function keystroke() {
     // Start timer
@@ -54,12 +158,13 @@ function keystroke() {
 function displayWPM() {
     let wpm = document.querySelector('#point')
     wpm.innerHTML = rightWords + ' wpm'
+    // Save the best result
     let best = localStorage.getItem('best') || 0;
     if (rightWords > best) {
         best = rightWords;
         localStorage.setItem('best', best)
     }
-    wpm.setAttribute('title','Best is '+best)
+    wpm.setAttribute('title', 'Best is ' + best)
 }
 
 // -------------------------------------
@@ -167,7 +272,7 @@ function WordBox(topDocument, botDocument) {
 }
 
 // -------------------------------------
-// WordInput
+// WordInput model
 // -------------------------------------
 
 function WordInput(document) {
@@ -197,7 +302,7 @@ function WordInput(document) {
 }
 
 // -------------------------------------
-// Timer
+// Timer model
 // -------------------------------------
 
 function Timer(document, duration, callback) {

@@ -22,10 +22,62 @@
         <input class="form-control word-input" type="text">
         <div class="extra">
             <div id="timer" class="badge badge-info mt-3"></div>
-            <div id="point" class="badge text-success bg-light mt-3" data-toggle="tooltip" data-placement="bottom" title="Best is 60"></div>
+            <div id="point" class="badge text-success bg-light mt-3" data-toggle="tooltip" data-placement="bottom"
+                title="Best is 60"></div>
         </div>
     </div>
     <p id="coder">by giahuy2201</p>
+    <p id="more">more</p>
+    <div id="panel">
+        <h2 class="panel__heading">Options</h2>
+        <hr>
+        <div class="panel__mode">
+            <h3 class="option__heading">Mode: </h3>
+            <div class="mode__list">
+                <div class="mode__item">
+                    <input type="checkbox" id="mode-easy">
+                    <label for="mode-easy">Easy</label>
+                </div>
+                <div class="mode__item">
+                    <input type="checkbox" id="mode-left-hand">
+                    <label for="mode-left-hand">Left-hand</label>
+                </div>
+                <div class="mode__item">
+                    <input type="checkbox" id="mode-right-hand">
+                    <label for="mode-right-hand">Right-hand</label>
+                </div>
+            </div>
+        </div>
+        <div class="panel__dark">
+            <h3 class="option__heading">Dark mode: </h3>
+            <div class="mode__list">
+                <div class="mode__item">
+                    <label id="dark-switch" class="dark-switch">
+                        <input type="checkbox" class="">
+                        <span class="dark-switch__slider dark-switch__knot"></span>
+                    </label>
+                </div>
+                <div class="mode__item">
+                    <input type="checkbox" class="auto" id="auto">
+                    <label for="auto">Auto</label>
+                </div>
+            </div>
+        </div>
+        <div class="panel__theme">
+            <h3 class="option__heading">Theme: </h3>
+            <div class="theme__list">
+                <div class="theme__item">
+                    <h4 class="theme__heading">Cacti</h4>
+                </div>
+                <div class="theme__item">
+                    <h4 class="theme__heading">Flora</h4>
+                </div>
+                <div class="theme__item">
+                    <h4 class="theme__heading">School</h4>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- JavaScript -->
     <script src="bundle.js"></script>
 </body>
