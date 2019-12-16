@@ -1,4 +1,4 @@
-@use '../node_modules/bootstrap/scss/bootstrap';
+@import "~bootstrap";
 
 // General settings
 $font-type: 2em "Times New Roman", Times, serif;
@@ -75,6 +75,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
     max-width: 800px;
     margin: 0 auto;
     font-family: $font-page;
+    // background-color: red;
 
     .word-box {
       border: 2px solid var(--theme-border);
@@ -163,7 +164,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-shadow: -3px 0 16px rgba($color: #000000, $alpha: 0.25);
   overflow-y: scroll;
 
-  hr{
+  hr {
     border-color: var(--theme-border);
   }
   .panel__heading {

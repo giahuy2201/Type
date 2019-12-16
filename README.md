@@ -3,6 +3,7 @@
 A static webpage to test your typing speed.
 
 Last month, I bought myself a keyboard to avoid sticking with my laptop all day since i noticed the deterioration of my eyes and wrists. The new keyboard - Anne Pro 2 - is white wireless 60%-sized, and it gives me a wonderful time typing and flexible posture. I love it so far. And because i like to type, I had a long time practicing it on [10fastfingers](https://10fastfingers.com). But the fact that the website requires Internet to get the results which i have little care for and the boring interface encourages me to make a own version.
+
 ![Picture of my just-bought keyboard](images/newKeyboard.jpg)
 
 This is my first serious static web project, and I'm building things from zero to learn more on-the-fly and get better at design and code organization. Thus, there are many mistakes need to be get away with.
@@ -38,9 +39,11 @@ Make your typing machine a bit customized by set your favorite theme. It current
 1. Cacti
 
    <img src="images/themes/seed_cacti.png" width="130px">
+
 2. Flora
 
    <img src="images/themes/seed_flora.png" width="130px">
+
 3. School
 
    <img src="images/themes/seed_pencil.png" width="130px">
@@ -48,6 +51,7 @@ Make your typing machine a bit customized by set your favorite theme. It current
 [Try](https://giahuy2201.github.io/Type) and see it yourself!
 
 ## Issues
+
 To be updated
 
 ## Notes
