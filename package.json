@@ -17,6 +17,9 @@
     "random-words": "^1.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.6",
     "css-loader": "^3.3.2",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",

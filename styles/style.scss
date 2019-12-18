@@ -1,8 +1,8 @@
-@import "~bootstrap";
+@import '~bootstrap';
 
 // General settings
-$font-type: 2em "Times New Roman", Times, serif;
-$font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-type: 2em 'Times New Roman', Times, serif;
+$font-page: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 :root {
   // Light theme default
   --theme-background: #fff;
@@ -113,7 +113,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
       #timer,
       #point {
         font-size: 2rem;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
       }
     }
   }
@@ -139,9 +139,6 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
 #coder {
   position: absolute;
   bottom: 0;
-  margin-bottom: 16px;
-  text-decoration: none;
-  color: var(--theme-text);
 }
 
 // Options panel
@@ -207,15 +204,15 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
       justify-content: flex-end;
 
       &:first-child {
-        background: url("../images/themes/seed_cacti.png");
+        background: url('../images/themes/seed_cacti.png');
         background-size: 150px;
       }
       &:nth-child(2) {
-        background: url("../images/themes/seed_flora.png");
+        background: url('../images/themes/seed_flora.png');
         background-size: 80px;
       }
       &:nth-child(3) {
-        background: url("../images/themes/seed_pencil.png");
+        background: url('../images/themes/seed_pencil.png');
         background-size: 100px;
       }
       &:last-child {
@@ -260,7 +257,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     &:before {
       position: absolute;
-      content: "";
+      content: '';
       height: 40px;
       width: 40px;
       top: 0;
@@ -269,7 +266,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
       right: 0;
       margin: auto 0;
       box-shadow: 0 0 15px #2020203d;
-      background: white url("../images/icons/sun.png");
+      background: white url('../images/icons/sun.png');
       background-repeat: no-repeat;
       background-position: center;
       background-size: 24px;
@@ -287,7 +284,7 @@ $font-page: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-transform: translateX(24px);
     -ms-transform: translateX(24px);
     transform: translateX(24px);
-    background: white url("../images/icons/moon.png");
+    background: white url('../images/icons/moon.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 24px;

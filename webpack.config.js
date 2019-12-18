@@ -10,6 +10,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /.js$/,
+        exclude: /node_module/,
+        loader: 'babel-loader'
+      },
+      {
         test: /\.s[ac]ss$/i,
         use: [
           // Creates `style` nodes from JS strings
