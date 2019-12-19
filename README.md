@@ -2,7 +2,7 @@
 
 A static webpage to test your typing speed.
 
-Last month, I bought myself a keyboard to avoid sticking with my laptop all day since i noticed the deterioration of my eyes and wrists. The new keyboard - Anne Pro 2 - is white wireless 60%-sized, and it gives me a wonderful time typing and flexible posture. I love it so far. And because i like to type, I had a long time practicing it on [10fastfingers](https://10fastfingers.com). But the fact that the website requires Internet to get the results which i have little care for and the boring interface encourages me to make a own version.
+Last month, I bought myself a keyboard to avoid sticking with my laptop all day since i noticed the deterioration of my eyes and wrists. The new keyboard - Anne Pro 2 - is white wireless 60%-sized, and it gives me a wonderful time typing and flexible posture. I love it so far. And because i like to type, I had a long time practicing it on [10fastfingers](https://10fastfingers.com). But the fact that the website requires Internet to get the results which i have little care for and the boring interface encourages me to make my own version.
 
 ![Picture of my just-bought keyboard](images/newKeyboard.jpg)
 
@@ -32,7 +32,13 @@ Allow 2 flexible appearance mode with the switch as simple as a click. Also, dar
 | :--------------------------: | :-------------------------: |
 | ![](images/darkmode-off.png) | ![](images/darkmode-on.png) |
 
-### 3. Themes
+### 3. Shortcuts
+
+- <kbd>Alt</kbd>+<kbd>Enter</kbd> to reset timer.
+- <kbd>Cmd</kbd> <kbd>Ctrl</kbd>+<kbd>E</kbd> to switch to left-hand mode.
+- <kbd>Cmd</kbd> <kbd>Ctrl</kbd>+<kbd>R</kbd> to switch to right-hand mode.
+
+### 4. Themes
 
 Make your typing machine a bit customized by set your favorite theme. It currently haves 3 avaible themes, and will get more in later update. And the themes are made to compatible with dark mode.
 
@@ -48,12 +54,14 @@ Make your typing machine a bit customized by set your favorite theme. It current
 
    <img src="images/themes/seed_pencil.png" width="130px">
 
+- I am still working on the custom theme feature. The source code has become large, so I considering changing the design which may take a while.
+
 [Try](https://giahuy2201.github.io/Type) and see it yourself!
 
 ## Issues
 
-To be updated
+- The code is hard to read.
 
 ## Notes
 
-- I also included a sketch design file for those interested in; I am not a desginer though.
+- I also includes a sketch design file in case you are interested in; I am not a desginer though.

@@ -60,3 +60,8 @@ function mobileWarning(page) {
     throw new Error('Unsupported device!');
   }
 }
+
+// Checkout my page
+document.querySelector('#coder').addEventListener('click', () => {
+  window.location.href = 'https://giahuy2201.github.io';
+});
