@@ -112,6 +112,7 @@ $font-page: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
       #timer,
       #point {
+        visibility: hidden;
         font-size: 2rem;
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
       }

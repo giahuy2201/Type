@@ -56,8 +56,8 @@ export default class Settings {
       option.classList.remove('theme-selected');
     });
     let url = '';
-    if (themeIndex !== 0) {
-      this.selectedTheme = this.themeOptions[themeIndex - 1];
+    this.selectedTheme = this.themeOptions[themeIndex - 1];
+    if (this.selectedTheme) {
       this.selectedTheme.classList.add('theme-selected');
       url = getComputedStyle(this.selectedTheme, false).backgroundImage;
     }
@@ -108,6 +108,30 @@ export default class Settings {
         }
         this.updateTheme();
       });
+    });
+    // Key shortcuts for typing modes
+    this.page.addEventListener('keydown', event => {
+      if (
+        (event.key === 'e' || event.key === 'r') &&
+        event.ctrlKey &&
+        event.metaKey
+      ) {
+        let primaryModeIndex = 1;
+        let secondaryModeIndex = 2;
+        if (event.key === 'r') {
+          primaryModeIndex = 2;
+          secondaryModeIndex = 1;
+        }
+        const secondaryMode = this.typingOptions[secondaryModeIndex];
+        secondaryMode.checked = false;
+        const secondaryModeName = secondaryMode.getAttribute('name');
+        localStorage.setItem(secondaryModeName, 'false');
+        const primaryMode = this.typingOptions[primaryModeIndex];
+        primaryMode.checked = !primaryMode.checked;
+        const primaryModeName = primaryMode.getAttribute('name');
+        localStorage.setItem(primaryModeName, primaryMode.checked);
+        this.updateWordBox();
+      }
     });
   }
 }

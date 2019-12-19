@@ -8,7 +8,6 @@ export default class Timer {
     this.page = page;
     this.wpm = wpm;
     this.started = false;
-    this.duration = 5;
   }
 
   set display(bool) {
@@ -20,14 +19,14 @@ export default class Timer {
     if (this.started) {
       return;
     }
+    this.reset();
     this.started = true;
     this.display = true;
-    this.wpm.reset();
     const countdown = setInterval(() => {
-      if (this.duration === 0) {
+      if (this.duration === 1) {
         clearInterval(countdown);
         this.wpm.show();
-        this.reset();
+        this.display = false;
       } else {
         this.duration -= 1;
       }
@@ -42,15 +41,18 @@ export default class Timer {
   }
 
   reset() {
+    this.duration = 60;
     this.started = false;
-    this.display = false;
-    this.duration = 5;
+    this.wpm.reset();
+    this.update();
   }
 
   listen() {
     this.page.addEventListener('keydown', event => {
       if (event.key === 'Enter' && event.altKey) {
-        this.start();
+        if (this.duration === 1) {
+          this.reset();
+        }
       }
     });
   }

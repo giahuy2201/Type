@@ -32,13 +32,9 @@ export default class WordInput {
   }
 
   listen() {
-    let firstStart = true;
     this.document.addEventListener('input', () => {
       // Start timer automatically
-      if (firstStart) {
-        this.timer.start();
-        firstStart = false;
-      }
+      this.timer.start();
       // Check input
       const currentWord = this.wordBox.currentWord;
       if (this.hasNewWord()) {
