@@ -14,7 +14,7 @@
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
-    "random-words": "^1.1.1"
+    "random-words": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
